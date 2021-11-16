@@ -1,7 +1,7 @@
 function armyTakeResorces(resources, carrying) {
   let result = [];
 
-  // Get the amount of all resouces
+  // Get the amount of all resources
   let amountAllResources = resources.reduce(
     (previousValue, currentValue) => previousValue + currentValue
   );
@@ -24,8 +24,12 @@ function armyTakeResorces(resources, carrying) {
       // Because the village doesn't have resources equal to'takingResources'
       result.push(currentResorceAmount);
       takedRes += currentResorceAmount;
+    
     } else if (
-        index === resources.length - 1) {
+      index === resources.length - 1 &&
+      0 < (carrying - takedRes) &&
+      (carrying - takedRes) <= currentResorceAmount) {
+
       result.push(carrying - takedRes);
     } else {
       result.push(takingResources);
@@ -35,16 +39,3 @@ function armyTakeResorces(resources, carrying) {
 
   return result;
 }
-
-let error = 0;
-for (let i = 0; i < 500; i++) {
-  let res = armyTakeResorces([1, 200, 102, 1, 3, 1], i);
-  let controlSumm = res.reduce(
-    (previousValue, currentValue) => previousValue + currentValue
-  );
-  if (i === controlSumm) {
-    error++;
-  }
-  console.log(`${i === controlSumm} ${i} == ${controlSumm} ${res}`);
-}
-console.log("ERROR:", error);
